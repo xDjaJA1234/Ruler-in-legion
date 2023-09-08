@@ -10,10 +10,20 @@ ruler_leaves_command_events.1 = {
 	desc = "ruler_leaves_command_events.1.desc"
 	picture = elephant_battle
 
-	left_portrait = current_ruler
-	left_portrait = current_ruler # Remember delete.
+	left_portrait = scope:commander_ruler
+	#left_portrait = current_ruler # Remember delete.
 	right_portrait = current_ruler
-	right_portrait = current_ruler # Remember delete.
+	#right_portrait = current_ruler # Remember delete.
+  
+  immediate = {
+    random_character = {
+      limit = {
+        is_ruler = yes
+        has_character_modifier = ruler_is_a_commander
+      }
+      save_scope_as = commander_ruler
+    }
+  }
 
 	option = { # Ruler Stops Being a Commander.
 		name = "ruler_leaves_command_events.1.a"
@@ -21,24 +31,22 @@ ruler_leaves_command_events.1 = {
 			exists = scope:commander_ruler
 		}
 		hidden_effect = {
-			remove_variable = {
-				name = ruler_become_commander
-			}
-			remove_country_modifier = {
-				name = ruler_is_in_command_of_armies
-			}
-			scope:commander_ruler = {
-				remove_character_modifier = {
-					name = ruler_is_a_commander
+			remove_variable = ruler_become_commander
+			
+			remove_country_modifier = ruler_is_in_command_of_armies
+			
+			scope:commander_ruler = { 
+        remove_character_modifier = ruler_is_a_commander
+        remove_command = yes
 				}
-			}
 			random_unit = {
-				limit = { legion = ROOT.capital_scope.governorship.legion }
-				remove_unit_modifier = {
-					name = ruler_in_command
-				}
-				remove_commander = scope:commander_ruler
+				limit = { 
+          #legion = ROOT.capital_scope.governorship.legion
+          has_unit_modifier = ruler_in_command
+          }
+				remove_unit_modifier = ruler_in_command
+				#remove_commander = scope:commander_ruler
 			}
-		}
+    }
 	}
 }
