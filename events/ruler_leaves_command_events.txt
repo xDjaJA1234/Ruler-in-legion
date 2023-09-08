@@ -1,0 +1,44 @@
+namespace = ruler_leaves_command_events
+
+#####################################
+## EVENT 2: Commander Ruler Events ##
+#####################################
+
+ruler_leaves_command_events.1 = {
+	type = country_event
+	title = "ruler_leaves_command_events.1.t"
+	desc = "ruler_leaves_command_events.1.desc"
+	picture = elephant_battle
+
+	left_portrait = current_ruler
+	left_portrait = current_ruler # Remember delete.
+	right_portrait = current_ruler
+	right_portrait = current_ruler # Remember delete.
+
+	option = { # Ruler Stops Being a Commander.
+		name = "ruler_leaves_command_events.1.a"
+		trigger = {
+			exists = scope:commander_ruler
+		}
+		hidden_effect = {
+			remove_variable = {
+				name = ruler_become_commander
+			}
+			remove_country_modifier = {
+				name = ruler_is_in_command_of_armies
+			}
+			scope:commander_ruler = {
+				remove_character_modifier = {
+					name = ruler_is_a_commander
+				}
+			}
+			random_unit = {
+				limit = { legion = ROOT.capital_scope.governorship.legion }
+				remove_unit_modifier = {
+					name = ruler_in_command
+				}
+				remove_commander = scope:commander_ruler
+			}
+		}
+	}
+}

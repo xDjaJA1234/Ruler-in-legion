@@ -1,0 +1,56 @@
+namespace = commander_ruler_events
+
+#####################################
+## EVENT 1: Commander Ruler Events ##
+#####################################
+
+commander_ruler_events.1 = {
+	type = country_event
+	title = "commander_ruler_events.1.t"
+	desc = "commander_ruler_events.1.desc"
+	picture = elephant_battle
+
+	left_portrait = current_ruler
+	left_portrait = current_ruler # Remember delete.
+	right_portrait = current_ruler
+	right_portrait = current_ruler # Remember delete.
+
+	immediate = {
+		random_character = {
+			limit = {
+				is_ruler = yes # Selects Current Ruler.
+			}
+			save_scope_as = commander_ruler
+		}
+	}
+
+	option = { # Ruler Becomes a Commander.
+		name = "commander_ruler_events.1.a"
+		trigger = {
+			exists = scope:commander_ruler
+		}
+		hidden_effect = {
+			set_variable = {
+				name = ruler_become_commander
+			}
+			add_country_modifier = {
+				name = ruler_is_in_command_of_armies
+				duration = -1
+			}
+			scope:commander_ruler = {
+				add_character_modifier = {
+					name = ruler_is_a_commander
+					duration = -1
+				}
+			}
+			random_unit = {
+				limit = { legion = ROOT.capital_scope.governorship.legion }
+				add_unit_modifier = {
+					name = ruler_in_command
+					duration = -1
+				}
+				set_as_commander = scope:commander_ruler
+			}
+		}
+	}
+}

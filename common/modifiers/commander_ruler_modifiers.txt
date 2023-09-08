@@ -1,0 +1,9 @@
+ruler_is_in_command_of_armies = {
+		land_morale = 0.50
+}
+ruler_is_a_commander = {
+		land_morale = 0.50
+}
+ruler_in_command = {
+		land_morale = 0.50
+}
