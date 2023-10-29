@@ -22,35 +22,112 @@ commander_ruler_events.1 = {
 			}
 			save_scope_as = commander_ruler
 		}
+    ordered_legion = {
+      limit = {
+        any_legion_unit = {
+          unit_size >= 1
+        }
+      }
+      save_scope_as = my_capital_legion
+      ordered_legion_unit = {
+        limit = {
+          legion = ROOT.capital_scope.governorship.legion
+          unit_size >= 1
+        }
+        max = 3
+        order_by = unit_size
+        if = {
+          limit = {
+            NOT = {
+              exists = scope:army_one
+            }
+          }
+          save_scope_as = army_one
+        }
+        else_if = {
+          limit = {
+            NOT = {
+              exists = scope:army_two
+            }
+          }
+          save_scope_as = army_two
+        }
+        else_if = {
+          limit = {
+            NOT = {
+              exists = scope:army_three
+            }
+          }
+          save_scope_as = army_three
+        }
+      }
+    }
 	}
 
 	option = { # Ruler Becomes a Commander.
 		name = "commander_ruler_events.1.a"
 		trigger = {
-			exists = scope:commander_ruler
+			exists = scope:army_one
 		}
-		hidden_effect = {
-			set_variable = {
-				name = ruler_become_commander
-			}
-			add_country_modifier = {
-				name = ruler_is_in_command_of_armies
-				duration = -1
-			}
-			scope:commander_ruler = {
-				add_character_modifier = {
-					name = ruler_is_a_commander
-					duration = -1
-				}
-			}
-			random_unit = {
-				limit = { legion = ROOT.capital_scope.governorship.legion }
-				add_unit_modifier = {
-					name = ruler_in_command
-					duration = -1
-				}
-				set_as_commander = scope:commander_ruler
-			}
+    set_variable = {
+      name = ruler_become_commander
+    } 
+    scope:commander_ruler = {
+      add_character_modifier = {
+        name = ruler_is_a_commander
+        duration = -1
+      }
+    }
+    scope:army_one = {
+      add_unit_modifier = {
+        name = ruler_in_command
+        duration = -1
+      }
+      set_as_commander = scope:commander_ruler
+    }
+	}
+	option = { # Ruler Becomes a Commander.
+		name = "commander_ruler_events.1.b"
+		trigger = {
+			exists = scope:army_two
 		}
+    set_variable = {
+      name = ruler_become_commander
+    }
+    scope:commander_ruler = {
+      add_character_modifier = {
+        name = ruler_is_a_commander
+        duration = -1
+      }
+    }
+    scope:army_two = {
+      add_unit_modifier = {
+        name = ruler_in_command
+        duration = -1
+      }
+      set_as_commander = scope:commander_ruler
+    }
+	}
+	option = { # Ruler Becomes a Commander.
+		name = "commander_ruler_events.1.c"
+		trigger = {
+			exists = scope:army_three
+		}
+    set_variable = {
+      name = ruler_become_commander
+    }
+    scope:commander_ruler = {
+      add_character_modifier = {
+        name = ruler_is_a_commander
+        duration = -1
+      }
+    }
+    scope:army_three = {
+      add_unit_modifier = {
+        name = ruler_in_command
+        duration = -1
+      }
+      set_as_commander = scope:commander_ruler
+    }
 	}
 }
